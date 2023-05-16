@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/Perfect-Hashed-Dictionary.iml" filepath="$PROJECT_DIR$/.idea/Perfect-Hashed-Dictionary.iml" />
+      <module fileurl="file://$PROJECT_DIR$/PerfectHashing/PerfectHashing.iml" filepath="$PROJECT_DIR$/PerfectHashing/PerfectHashing.iml" />
+    </modules>
+  </component>
+</project>
