@@ -1,13 +1,13 @@
 package org.example.Dictionary;
 
-import org.example.Map.HashMap;
-import org.example.Map.IHashMap;
-import org.example.Map.LinearHashMap;
-import org.example.Map.QuadraticHashMap;
+import org.example.ADT.HashMapSpace;
+import org.example.ADT.IHashMap;
+import org.example.ADT.LinearHashMap;
+import org.example.ADT.QuadraticHashMap;
 
 public class DictionaryFactory {
 
-    public static Dictionary getDictionary(HashMap mapType){
+    public static Dictionary getDictionary(HashMapSpace mapType){
         IHashMap map;
         map = switch (mapType){
             case Linear -> new LinearHashMap();

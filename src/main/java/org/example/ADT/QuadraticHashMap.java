@@ -1,4 +1,4 @@
-package org.example.Map;
+package org.example.ADT;
 
 
 public class QuadraticHashMap implements IHashMap{

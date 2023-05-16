@@ -2,7 +2,7 @@ package org.example.Dictionary;
 
 
 import org.apache.commons.lang3.tuple.Pair;
-import org.example.Map.IHashMap;
+import org.example.ADT.IHashMap;
 
 import java.io.*;
 

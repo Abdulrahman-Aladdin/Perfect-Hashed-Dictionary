@@ -2,10 +2,9 @@ package org.example.CLI;
 
 import org.example.Dictionary.DictionaryFactory;
 import org.example.Dictionary.IDictionary;
-import org.example.Map.HashMap;
+import org.example.ADT.HashMapSpace;
 
 public class InitializeCommand extends AbstractCommand<IDictionary>{
-
 
     public InitializeCommand() {
         super(null);
@@ -14,8 +13,8 @@ public class InitializeCommand extends AbstractCommand<IDictionary>{
     @Override
     public IDictionary execute(String input) {
         this.dictionary =  switch (input){
-            case "1" -> DictionaryFactory.getDictionary(HashMap.Linear);
-            case "2" -> DictionaryFactory.getDictionary(HashMap.Quadratic);
+            case "1" -> DictionaryFactory.getDictionary(HashMapSpace.Linear);
+            case "2" -> DictionaryFactory.getDictionary(HashMapSpace.Quadratic);
             default -> null;
         };
 
