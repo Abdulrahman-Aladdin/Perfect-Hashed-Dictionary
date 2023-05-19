@@ -11,6 +11,7 @@ public class CommandFactory {
             case DELETE -> new DeleteCommand(dictionary);
             case BATCH_INSERT -> new BatchInsertCommand(dictionary);
             case BATCH_DELETE -> new BatchDeleteCommand(dictionary);
+            case EXIT -> new ExitCommand(dictionary);
             default -> null;
         };
     }

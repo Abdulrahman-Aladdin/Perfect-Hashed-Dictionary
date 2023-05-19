@@ -7,10 +7,10 @@ import org.example.ADT.QuadraticHashMap;
 
 public class DictionaryFactory {
 
-    public static Dictionary getDictionary(HashMapSpace mapType){
+    public static Dictionary getDictionary(HashMapSpace mapType, int N){
         IHashMap map;
         map = switch (mapType){
-            case Linear -> new LinearHashMap();
+            case Linear -> new LinearHashMap(N);
             case Quadratic -> new QuadraticHashMap();
         };
         return new Dictionary(map);

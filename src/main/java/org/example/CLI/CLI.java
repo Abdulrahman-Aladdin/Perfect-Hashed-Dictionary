@@ -27,6 +27,7 @@ public class CLI implements Runnable {
         System.out.println("3- Search");
         System.out.println("4- BatchInsert");
         System.out.println("5- BatchDelete");
+        System.out.println("6- Exit");
         System.out.print("Enter your choice : ");
     }
 
@@ -60,7 +61,7 @@ public class CLI implements Runnable {
     }
 
     private void clearScreen() {
-        for (int i = 0; i < 50; i++) System.out.println();
+//        for (int i = 0; i < 50; i++) System.out.println();
         /*try {
             if (System.getProperty("os.name").contains("Windows"))
                 new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
@@ -77,6 +78,7 @@ public class CLI implements Runnable {
             case "3" -> CommandFactory.getCommand(Commands.SEARCH,dictionary);
             case "4" -> CommandFactory.getCommand(Commands.BATCH_INSERT,dictionary);
             case "5" -> CommandFactory.getCommand(Commands.BATCH_DELETE,dictionary);
+            case "6" -> CommandFactory.getCommand(Commands.EXIT,dictionary);
             default -> null;
         };
     }

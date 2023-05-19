@@ -3,6 +3,8 @@ package org.example.ADT;
 
 public class QuadraticHashMap implements IHashMap{
 
+
+
     @Override
     public boolean insert(String word) {
         return false;
