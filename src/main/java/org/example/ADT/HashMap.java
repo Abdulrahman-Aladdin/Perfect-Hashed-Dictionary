@@ -1,24 +1,21 @@
 package org.example.ADT;
 
-
 import java.util.Arrays;
+import java.util.Objects;
 
 public class HashMap {
 
-    public int[] hashTable;
+    public String[] hashTable;
     public int[][] hashFunction;
-    int u, b, size;
+    int u;
+    int b;
+    int size;
     int numOfElements = 0;
 
     public HashMap(int u, int b) {
         this.u = u;
         this.b = b;
-        this.size = (int) Math.pow(Math.pow(2, b), 2);
-        this.hashTable = new int[size];
-        Arrays.fill(this.hashTable, -1);
-        generate_hash();
     }
-
 
     public void generate_hash() {
         this.hashFunction = new int[this.b][this.u];
@@ -30,9 +27,9 @@ public class HashMap {
         }
     }
 
-    int hash(int x) {
-        int[] temp = new int[this.u];
-        int y = x;
+    public int hash(long x) {
+        long[] temp = new long[this.u];
+        long y = x;
         for (int i = 0; i < this.u; i++) {
             temp[i] = y % 2;
             y /= 2;
@@ -51,21 +48,28 @@ public class HashMap {
     }
 
 
-    void rehash(int b) {
+    public void rehash(int b) {
         this.b = b;
-        this.size = getSize(this.b);
+        this.setInnerTableSize();
+        reHashHelper();
+    }
 
+    public void rehash() {
+        reHashHelper();
+    }
+
+
+    public void reHashHelper() {
         generate_hash();
-
-        int[] tempHashTable = new int[this.size];
-        Arrays.fill(tempHashTable,-1);
+        String[] tempHashTable = new String[this.size];
+        Arrays.fill(tempHashTable, null);
 
         int temp = 0;
 
-        for (int value : this.hashTable) {
-            if (value != -1) {
-                int x = hash(value);
-                if (tempHashTable[x] != -1) {
+        for (String value : this.hashTable) {
+            if (value != null) {
+                int x = hash(stringToLong(value));
+                if (tempHashTable[x] != null) {
                     temp = 1;
                     break;
                 }
@@ -81,37 +85,49 @@ public class HashMap {
         this.hashTable = tempHashTable;
     }
 
-    boolean search(int x){
-        int index = hash(x);
-        return this.hashTable[index] == x;
+    boolean search(String word) {
+        int index = hash(stringToLong(word));
+        return Objects.equals(this.hashTable[index], word);
     }
 
-    boolean delete(int x) {
-        int index = hash(x);
-        if (this.hashTable[index] == x) {
-            this.hashTable[index] = -1;
+    boolean delete(String word) {
+        int index = hash(stringToLong(word));
+        if (Objects.equals(this.hashTable[index], word)) {
+            this.hashTable[index] = null;
             return true;
         }
         return false;
     }
 
-    protected int stringToInt(String key) {
-        return Math.abs(key.hashCode());
-    }
-
-    protected long stringToLong(String key) {
-        long hashVal = 0;
-        for (int i = 0; i < key.length(); i++) {
-            hashVal = (hashVal << 4) + (key.charAt(i));
-            long g = hashVal & 0xF0000000L;
-            if (g != 0) hashVal ^= g >>> 24;
-            hashVal &= ~g;
+    public long stringToLong(String k) {
+        final long FNV_64_INIT = 0xcbf29ce484222325L;
+        final long FNV_64_PRIME = 0x100000001b3L;
+        long rv = FNV_64_INIT;
+        final int len = k.length();
+        for (int i = 0; i < len; i++) {
+            rv ^= k.charAt(i);
+            rv *= FNV_64_PRIME;
         }
-        return hashVal;
+        return rv;
     }
 
-    private int getSize(int b){
-        return (int) Math.pow(Math.pow(2, b), 2);
+    public void setOuterTableSize() {
+        this.size = (int) Math.pow(2, b);
+    }
+
+    public void setInnerTableSize() {
+        this.size = (int) Math.pow(Math.pow(2, b), 2);
+    }
+
+    public void initializeTable() {
+        this.hashTable = new String[size];
+        Arrays.fill(this.hashTable, null);
+        generate_hash();
+    }
+
+
+    public int getSize() {
+        return size;
     }
 
 }
