@@ -3,6 +3,8 @@ package org.example.ADT;
 import java.util.Arrays;
 import java.util.Objects;
 
+import static java.lang.Math.abs;
+
 public class HashMap {
 
     public String[] hashTable;
@@ -28,19 +30,20 @@ public class HashMap {
     }
 
     public int hash(long x) {
-        long[] temp = new long[this.u];
-        long y = x;
+        int[] temp = new int[this.u];
+        long y = abs(x);
         for (int i = 0; i < this.u; i++) {
-            temp[i] = y % 2;
+            temp[i] = (int)(y % 2);
             y /= 2;
         }
         int ans = 0;
         for (int i = 0; i < this.b; i++) {
             int s = 0;
             for (int j = 0; j < this.u; j++) {
-                s |= (this.hashFunction[i][j] & temp[j]);
+
+                s ^= (temp[j] & this.hashFunction[i][j]);
             }
-            if (s == 1)
+            if (s  == 1)
                 ans += Math.pow(2, this.b - i - 1);
 
         }

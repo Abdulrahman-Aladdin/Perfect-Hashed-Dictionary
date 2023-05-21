@@ -35,7 +35,6 @@ public class LinearHashMap implements IHashMap {
 
         long val = hashMap.stringToLong(word);
         int outerIndex = hashMap.hash(val);
-
         if (outerTable.get(outerIndex) == null) {
             outerTable.set(outerIndex, new HashMap(u, 0));
             outerTable.get(outerIndex).setInnerTableSize();
