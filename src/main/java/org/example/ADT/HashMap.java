@@ -15,7 +15,7 @@ public class HashMap {
     int numOfElements = 0;
 
     public HashMap(int u, int b) {
-        this.u = u;
+        this.u = u+1;
         this.b = b;
     }
 
@@ -32,7 +32,12 @@ public class HashMap {
     public int hash(long x) {
         int[] temp = new int[this.u];
         long y = abs(x);
-        for (int i = 0; i < this.u; i++) {
+        if(x < 0){
+            temp[0] = 1;
+        }else{
+            temp[0] = 0;
+        }
+        for (int i = 1; i < this.u; i++) {
             temp[i] = (int)(y % 2);
             y /= 2;
         }
