@@ -1,5 +1,5 @@
 package org.example.ADT;
-
+import static java.lang.Math.ceil;
 
 public class QuadraticHashMap implements IHashMap {
     private final HashMap hashMap;
@@ -12,11 +12,9 @@ public class QuadraticHashMap implements IHashMap {
         this.b = generateB(N);
         hashMap = new HashMap(u, b);
     }
-
     private int generateB(int N) {
-        return (int) (Math.log(N) / Math.log(2));
+        return (int) ceil(Math.log(N) / Math.log(2));
     }
-
     @Override
     public boolean insert(String word) {
         int hashValue = hashMap.stringToInt(word);
@@ -25,16 +23,13 @@ public class QuadraticHashMap implements IHashMap {
         }
         if(hashMap.hashTable[hashMap.hash(hashValue)] == -1) {
             hashMap.hashTable[hashMap.hash(hashValue)] = hashValue;
-            return true;
         }
-        /***
-         * TODO: Implement case when hashTable[hash(hashValue)] is not empty
-         */
-
-
+        else {
+            hashMap.rehash(b);
+            insert(word);
+        }
         return true;
     }
-
     @Override
     public boolean delete(String word) {
         int hashValue = hashMap.stringToInt(word);
@@ -43,7 +38,6 @@ public class QuadraticHashMap implements IHashMap {
         }
         return false;
     }
-
     @Override
     public boolean search(String word) {
         int hashValue = hashMap.stringToInt(word);
