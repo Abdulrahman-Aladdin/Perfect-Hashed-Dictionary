@@ -7,13 +7,7 @@ import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
-        write();
         new CLI().run();
-
-//        while (true){
-//            write();
-//            read();
-//        }
     }
 
     public static void write(){
@@ -93,10 +87,5 @@ public class Main {
                 .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
                 .toString();
     }
-
-    public void test(){
-
-    }
-
 }
 

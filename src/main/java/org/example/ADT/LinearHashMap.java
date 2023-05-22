@@ -9,11 +9,9 @@ public class LinearHashMap implements IHashMap {
 
     private HashMap hashMap;
     private final ArrayList<HashMap> outerTable;
-
     private int N = (int) 10e5; // default
     private final int u = Long.SIZE;
     private final int b;
-
 
     public LinearHashMap(int N) {
         this.N = N;
@@ -51,6 +49,7 @@ public class LinearHashMap implements IHashMap {
         if (innerTable.hashTable[innerIndex] == null) {
             innerTable.hashTable[innerIndex] = word;
             innerTable.numOfElements++;
+            hashMap.numOfElements++;
             return true;
         }
 
@@ -110,14 +109,19 @@ public class LinearHashMap implements IHashMap {
 
     @Override
     public boolean delete(String word) {
+
+        if (!search(word)) return false;
+
         long val = hashMap.stringToLong(word);
         int outerIndex = hashMap.hash(val);
         HashMap innerTable = outerTable.get(outerIndex);
 
-        if (innerTable == null) return false;
+        if (innerTable.delete(word)){
+            innerTable.numOfElements--;
+            return true;
+        }
 
-        innerTable.numOfElements--;
-        return innerTable.delete(word);
+        return false;
     }
 
     @Override

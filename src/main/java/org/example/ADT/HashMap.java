@@ -16,7 +16,7 @@ public class HashMap {
     int numOfCollisions = 0;
 
     public HashMap(int u, int b) {
-        this.u = u+1;
+        this.u = u + 1;
         this.b = b;
     }
 
@@ -33,14 +33,14 @@ public class HashMap {
     public int hash(long x) {
         int[] temp = new int[this.u];
         long y = abs(x);
-        if(x < 0){
+        if (x < 0) {
             temp[0] = 1;
-        }else{
+        } else {
             temp[0] = 0;
         }
 
         for (int i = 1; i < this.u; i++) {
-            temp[i] = (int)(y % 2);
+            temp[i] = (int) (y % 2);
             y /= 2;
         }
 
@@ -50,13 +50,12 @@ public class HashMap {
             for (int j = 0; j < this.u; j++) {
                 s ^= (temp[j] & this.hashFunction[i][j]);
             }
-            if (s  == 1)
+            if (s == 1)
                 ans += Math.pow(2, this.b - i - 1);
 
         }
         return ans;
     }
-
 
     public void rehash(int b) {
         this.b = b;
@@ -67,7 +66,6 @@ public class HashMap {
     public void rehash() {
         reHashHelper();
     }
-
 
     public void reHashHelper() {
         generate_hash();

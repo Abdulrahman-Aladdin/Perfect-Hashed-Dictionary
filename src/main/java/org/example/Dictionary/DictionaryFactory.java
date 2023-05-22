@@ -11,7 +11,7 @@ public class DictionaryFactory {
         IHashMap map;
         map = switch (mapType){
             case Linear -> new LinearHashMap(N);
-            case Quadratic -> new QuadraticHashMap();
+            case Quadratic -> new QuadraticHashMap(N);
         };
         return new Dictionary(map);
     }

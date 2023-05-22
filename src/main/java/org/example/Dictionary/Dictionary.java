@@ -11,12 +11,12 @@ public class Dictionary implements IDictionary {
 
     IHashMap map;
 
-    public Dictionary(IHashMap map){
+    public Dictionary(IHashMap map) {
         this.map = map;
     }
 
     @Override
-    public Pair<Boolean,Integer> insert(String word) {
+    public Pair<Boolean, Integer> insert(String word) {
         map.setNumOfCollisions(0);
         return Pair.of(map.insert(word), map.getNumOfCollisions());
     }
@@ -32,7 +32,7 @@ public class Dictionary implements IDictionary {
     }
 
     @Override
-    public Triple<Integer,Integer,Integer> batchInsert(String path) {
+    public Triple<Integer, Integer, Integer> batchInsert(String path) {
 
         int numberOfWordsInserted = 0;
         int numberOfWordsExisting = 0;
@@ -40,9 +40,6 @@ public class Dictionary implements IDictionary {
 
         try {
             File file = new File(path);
-
-            if (file == null) return null;
-
             FileReader fr = new FileReader(file);
             BufferedReader br = new BufferedReader(fr);
 
@@ -52,30 +49,28 @@ public class Dictionary implements IDictionary {
                 if (map.insert(line)) {
                     numberOfWordsInserted++;
                     numberOfCollisions += map.getNumOfCollisions();
-                }
-                else numberOfWordsExisting++;
+                } else numberOfWordsExisting++;
             }
 
             br.close();
             fr.close();
+        } catch (FileNotFoundException e) {
+            return null;
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
-        return Triple.of(numberOfWordsInserted,numberOfWordsExisting,numberOfCollisions);
+        return Triple.of(numberOfWordsInserted, numberOfWordsExisting, numberOfCollisions);
     }
 
     @Override
-    public Pair<Integer,Integer> batchDelete(String path) {
+    public Pair<Integer, Integer> batchDelete(String path) {
 
         int numberOfWordsDeleted = 0;
         int numberOfWordsExisting = 0;
 
         try {
             File file = new File(path);
-
-            if (file == null) return null;
-
             FileReader fr = new FileReader(file);
             BufferedReader br = new BufferedReader(fr);
 
@@ -87,11 +82,13 @@ public class Dictionary implements IDictionary {
 
             br.close();
             fr.close();
+        } catch (FileNotFoundException e) {
+            return null;
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
-        return Pair.of(numberOfWordsDeleted,numberOfWordsExisting);
+        return Pair.of(numberOfWordsDeleted, numberOfWordsExisting);
     }
 
 }
