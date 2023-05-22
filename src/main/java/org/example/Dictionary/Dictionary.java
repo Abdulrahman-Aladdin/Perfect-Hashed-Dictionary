@@ -2,6 +2,7 @@ package org.example.Dictionary;
 
 
 import org.apache.commons.lang3.tuple.Pair;
+import org.apache.commons.lang3.tuple.Triple;
 import org.example.ADT.IHashMap;
 
 import java.io.*;
@@ -15,8 +16,9 @@ public class Dictionary implements IDictionary {
     }
 
     @Override
-    public boolean insert(String word) {
-        return map.insert(word);
+    public Pair<Boolean,Integer> insert(String word) {
+        map.setNumOfCollisions(0);
+        return Pair.of(map.insert(word), map.getNumOfCollisions());
     }
 
     @Override
@@ -30,10 +32,11 @@ public class Dictionary implements IDictionary {
     }
 
     @Override
-    public Pair<Integer,Integer> batchInsert(String path) {
+    public Triple<Integer,Integer,Integer> batchInsert(String path) {
 
         int numberOfWordsInserted = 0;
         int numberOfWordsExisting = 0;
+        int numberOfCollisions = 0;
 
         try {
             File file = new File(path);
@@ -45,7 +48,11 @@ public class Dictionary implements IDictionary {
 
             String line;
             while ((line = br.readLine()) != null) {
-                if (map.insert(line)) numberOfWordsInserted++;
+                map.setNumOfCollisions(0);
+                if (map.insert(line)) {
+                    numberOfWordsInserted++;
+                    numberOfCollisions += map.getNumOfCollisions();
+                }
                 else numberOfWordsExisting++;
             }
 
@@ -55,7 +62,7 @@ public class Dictionary implements IDictionary {
             throw new RuntimeException(e);
         }
 
-        return Pair.of(numberOfWordsInserted,numberOfWordsExisting);
+        return Triple.of(numberOfWordsInserted,numberOfWordsExisting,numberOfCollisions);
     }
 
     @Override

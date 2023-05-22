@@ -4,7 +4,6 @@ package org.example.ADT;
 public class QuadraticHashMap implements IHashMap{
 
 
-
     @Override
     public boolean insert(String word) {
         return false;
@@ -19,5 +18,16 @@ public class QuadraticHashMap implements IHashMap{
     public boolean search(String word) {
         return false;
     }
+
+    @Override
+    public int getNumOfCollisions() {
+        return 0;
+    }
+
+    @Override
+    public void setNumOfCollisions(int numOfCollisions) {
+
+    }
+
 
 }

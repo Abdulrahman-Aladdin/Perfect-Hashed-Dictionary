@@ -3,9 +3,7 @@ package org.example.ADT;
 
 import org.apache.commons.lang3.tuple.Pair;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Objects;
+import java.util.*;
 
 public class LinearHashMap implements IHashMap {
 
@@ -21,13 +19,13 @@ public class LinearHashMap implements IHashMap {
         this.N = N;
         this.b = generateB(N);
         this.initializeOuterTable();
-        outerTable = new ArrayList<>(Collections.nCopies(hashMap.getSize(), null));
+        outerTable = new ArrayList<>(Collections.nCopies(hashMap.size, null));
     }
 
     public LinearHashMap() {
         this.b = generateB(N);
         this.initializeOuterTable();
-        outerTable = new ArrayList<>(Collections.nCopies(hashMap.getSize(), null));
+        outerTable = new ArrayList<>(Collections.nCopies(hashMap.size, null));
     }
 
     @Override
@@ -59,6 +57,7 @@ public class LinearHashMap implements IHashMap {
         // numOfElements + 1 -> (numOfElements + 1)^2 -> to first power of 2 >= -> N^2 -> b = log2(N^2)
         // cell is not empty , so we have to rehash
         if (innerTable.hashTable[innerIndex] != null) {
+            hashMap.numOfCollisions++;
             int newB = generateB(findNearestPowerOf2(
                             (innerTable.numOfElements + 1) * (innerTable.numOfElements + 1)));
 
@@ -74,15 +73,22 @@ public class LinearHashMap implements IHashMap {
         int numberOfWordsInserted = 0;
         int numberOfWordsExisting = 0;
 
-        ArrayList<ArrayList<String>> tempTable = new ArrayList<>(Collections.nCopies(N, new ArrayList<>()));
+        ArrayList<ArrayList<String>> tempTable = new ArrayList<>(Collections.nCopies(N, null));
+
+        Set<Integer> set = new HashSet<>();
 
         for (String string : strings) {
             long val = hashMap.stringToLong(string);
             int index = hashMap.hash(val);
+
+            if (tempTable.get(index) == null) tempTable.set(index,new ArrayList<>());
+
             tempTable.get(index).add(string);
+            set.add(index);
         }
 
-        for (int i = 0; i < tempTable.size(); i++) {
+
+        for (var i : set) {
             var list = tempTable.get(i);
 
             if (list.size() != 0) {
@@ -107,6 +113,9 @@ public class LinearHashMap implements IHashMap {
         long val = hashMap.stringToLong(word);
         int outerIndex = hashMap.hash(val);
         HashMap innerTable = outerTable.get(outerIndex);
+
+        if (innerTable == null) return false;
+
         innerTable.numOfElements--;
         return innerTable.delete(word);
     }
@@ -115,7 +124,7 @@ public class LinearHashMap implements IHashMap {
     public boolean search(String word) {
         long val = hashMap.stringToLong(word);
         int outerIndex = hashMap.hash(val);
-        return outerTable.get(outerIndex).search(word);
+        return outerTable.get(outerIndex) != null && outerTable.get(outerIndex).search(word);
     }
 
     private int generateB(int N) {
@@ -136,7 +145,16 @@ public class LinearHashMap implements IHashMap {
         return rounded;
     }
 
-    private void reHashTable() {
-
+    public int getNumOfElements(){
+        return hashMap.numOfElements;
     }
+
+    public int getNumOfCollisions() {
+        return hashMap.numOfCollisions;
+    }
+
+    public void setNumOfCollisions(int numOfCollisions) {
+        hashMap.numOfCollisions = numOfCollisions;
+    }
+
 }

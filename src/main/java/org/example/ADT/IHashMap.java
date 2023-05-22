@@ -9,4 +9,7 @@ public interface IHashMap {
 
     boolean search(String word);
 
+    int getNumOfCollisions();
+
+    void setNumOfCollisions(int numOfCollisions);
 }

@@ -7,12 +7,13 @@ import static java.lang.Math.abs;
 
 public class HashMap {
 
-    public String[] hashTable;
-    public int[][] hashFunction;
+    String[] hashTable;
+    int[][] hashFunction;
     int u;
     int b;
     int size;
     int numOfElements = 0;
+    int numOfCollisions = 0;
 
     public HashMap(int u, int b) {
         this.u = u+1;
@@ -37,15 +38,16 @@ public class HashMap {
         }else{
             temp[0] = 0;
         }
+
         for (int i = 1; i < this.u; i++) {
             temp[i] = (int)(y % 2);
             y /= 2;
         }
+
         int ans = 0;
         for (int i = 0; i < this.b; i++) {
             int s = 0;
             for (int j = 0; j < this.u; j++) {
-
                 s ^= (temp[j] & this.hashFunction[i][j]);
             }
             if (s  == 1)
@@ -132,10 +134,4 @@ public class HashMap {
         Arrays.fill(this.hashTable, null);
         generate_hash();
     }
-
-
-    public int getSize() {
-        return size;
-    }
-
 }
