@@ -104,4 +104,8 @@ public class Dictionary implements IDictionary {
         return Pair.of(numberOfWordsDeleted, numberOfWordsExisting);
     }
 
+    public int getTotalSize(){
+        return map.calculateTotalSize();
+    }
+
 }

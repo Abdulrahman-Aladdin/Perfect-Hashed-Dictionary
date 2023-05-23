@@ -70,4 +70,9 @@ public class QuadraticHashMap implements IHashMap {
     public void setNumOfCollisions(int numOfCollisions) {
         hashMap.numOfCollisions = numOfCollisions;
     }
+
+    @Override
+    public int calculateTotalSize() {
+        return hashMap.size;
+    }
 }

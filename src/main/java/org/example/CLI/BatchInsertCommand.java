@@ -26,6 +26,8 @@ public class BatchInsertCommand extends AbstractCommand<Void>{
         System.out.println("Number of words inserted = " + output.getLeft());
         System.out.println("Number of words existing = " + output.getMiddle());
         System.out.println("Number of collisions = " + output.getRight());
+//        System.out.println("Total Size = " + dictionary.getTotalSize());
+
 
         return null;
     }

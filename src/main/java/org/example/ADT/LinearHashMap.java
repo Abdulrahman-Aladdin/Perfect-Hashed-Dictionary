@@ -12,7 +12,7 @@ public class LinearHashMap implements IHashMap {
     private final ArrayList<HashMap> outerTable;
     private int N = (int) 10e5; // default
     private final int u = Long.SIZE;
-    private int b;
+    private final int b;
 
     public LinearHashMap(int N) {
         this.N = N;
@@ -164,4 +164,12 @@ public class LinearHashMap implements IHashMap {
         hashMap.numOfCollisions = numOfCollisions;
     }
 
+    @Override
+    public int calculateTotalSize() {
+        int totalSize = hashMap.size;
+        for (var innerTable : outerTable){
+            if (innerTable != null) totalSize += innerTable.size;
+        }
+        return totalSize;
+    }
 }

@@ -11,4 +11,6 @@ public interface IDictionary {
 
     Triple<Integer,Integer,Integer> batchInsert(String path);
     Pair<Integer,Integer> batchDelete(String path);
+
+    int getTotalSize();
 }

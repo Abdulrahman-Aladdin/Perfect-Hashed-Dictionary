@@ -12,4 +12,6 @@ public interface IHashMap {
     int getNumOfCollisions();
 
     void setNumOfCollisions(int numOfCollisions);
+
+    int calculateTotalSize();
 }
