@@ -1,11 +1,14 @@
 package org.example.Analysis;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Analyst {
     public ArrayList<Long> insertTimes;
     public ArrayList<Long> deleteTimes;
     public ArrayList<Long> searchTimes;
+    public ArrayList<Long> meanSearch;
     public ArrayList<Long> size;
     long sizes;
     private static Analyst analyst;
@@ -15,6 +18,7 @@ public class Analyst {
         deleteTimes = new ArrayList<>();
         searchTimes = new ArrayList<>();
         size = new ArrayList<>();
+        meanSearch = new ArrayList<>();
         sizes = 0;
     }
 
@@ -43,25 +47,37 @@ public class Analyst {
         System.out.println("Insertion: " + insertTimes.toString());
         System.out.println("Deletion: " + deleteTimes.toString());
         System.out.println("search: " + searchTimes.toString());
+        System.out.println("meanSearch: " + meanSearch.toString());
         System.out.println("size: " + size.toString());
-        getSizes ();
+        getSizes();
+        writeToFile(Long.toString(size.get(0)), "qsize.txt");
         long meanInsertionTime = getMeanTime(insertTimes);
         System.out.println("Mean Insertion time: " + meanInsertionTime);
+        writeToFile(Long.toString(meanInsertionTime), "qinsertion.txt");
         long meanDeletionTime = getMeanTime(deleteTimes);
         System.out.println("Mean Deletion time: " + meanDeletionTime);
+        writeToFile(Long.toString(meanDeletionTime), "qdeletion.txt");
         long meanSearchTime = getMeanSearchTime(searchTimes);
         System.out.println("Mean Search time: " + meanSearchTime);
+        writeToFile(Long.toString(meanSearchTime), "qsearch.txt");
+    }
+
+    private static void writeToFile (String time, String fileName) {
+        try {
+            FileWriter writer = new FileWriter(fileName, true);
+            writer.write(time + '\n');
+            writer.close();
+        } catch (IOException e) {
+            System.out.println("An error occurred while saving the words to file.");
+        }
     }
 
     private long getMeanSearchTime(ArrayList<Long> searchTimes) {
-        long res = 0;
-        for (int i = 0; i < searchTimes.size(); i += 4) {
-            double mean = 0;
-            for (int j = i; j < i + 4; j++) {
-                mean += (searchTimes.get(j) / 4.0);
-            }
-            res += (mean * size.get(i / 4));
+        long mean = 0;
+        for (Long x : searchTimes) {
+            mean += x;
         }
-        return (res / sizes);
+        mean = (mean / searchTimes.size());
+        return mean;
     }
 }
