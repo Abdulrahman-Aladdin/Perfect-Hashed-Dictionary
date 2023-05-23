@@ -1,6 +1,7 @@
 package org.example.ADT;
 
 import org.junit.Test;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class PerfectHashingTest {
@@ -12,6 +13,7 @@ public class PerfectHashingTest {
         assertTrue(hashMap.insert("apple"));
         assertTrue(hashMap.search("apple"));
     }
+
     @Test
     // Test inserting a word into an empty Quadratic Hashing hash table
     public void testQuadraticHashingInsert() {
@@ -19,6 +21,7 @@ public class PerfectHashingTest {
         assertTrue(hashMap.insert("apple"));
         assertTrue(hashMap.search("apple"));
     }
+
     @Test
     // Test deleting a word from the LinearHashMap hash table
     public void testLinearHashingDelete() {
@@ -103,64 +106,284 @@ public class PerfectHashingTest {
 
     @Test
     // Test inserting a large number of words into the LinearHashMap hash table
-    public void testLinearHashMapInsertLargeNumber() {
+    public void testLinearHashMapInsertLargeNumberOne() {
         LinearHashMap hashMap = new LinearHashMap(1000);
         for (int i = 0; i < 1000; i++) {
             assertTrue(hashMap.insert("word" + i));
         }
-        System.out.println(hashMap.getNumOfCollisions());
+        System.out.println("Linear Hashing Number of Collisions: " + hashMap.getNumOfCollisions());
+        assertEquals(1000, hashMap.getNumOfElements());
+    }
+
+    @Test
+    // Test inserting a large number of words into the LinearHashMap hash table
+    public void testLinearHashMapInsertLargeNumberTwo() {
+        LinearHashMap hashMap = new LinearHashMap(10_000);
+        for (int i = 0; i < 10_000; i++) {
+            assertTrue(hashMap.insert("word" + i));
+        }
+        System.out.println("Linear Hashing Number of Collisions: " + hashMap.getNumOfCollisions());
+        assertEquals(10_000, hashMap.getNumOfElements());
+    }
+
+    @Test
+    // Test inserting a large number of words into the LinearHashMap hash table
+    public void testLinearHashMapInsertLargeNumberThree() {
+        LinearHashMap hashMap = new LinearHashMap(100_000);
+        for (int i = 0; i < 100_000; i++) {
+            assertTrue(hashMap.insert("word" + i));
+        }
+        System.out.println("Linear Hashing Number of Collisions: " + hashMap.getNumOfCollisions());
+        assertEquals(100_000, hashMap.getNumOfElements());
+    }
+
+
+    @Test
+    // Test inserting a large number of words into the LinearHashMap hash table
+    public void testLinearHashMapInsertLargeNumberFour() {
+        LinearHashMap hashMap = new LinearHashMap(1_000_000);
+        for (int i = 0; i < 1_000_000; i++) {
+            assertTrue(hashMap.insert("word" + i));
+        }
+        System.out.println("Linear Hashing Number of Collisions: " + hashMap.getNumOfCollisions());
+        assertEquals(1_000_000, hashMap.getNumOfElements());
+    }
+
+    @Test
+    // Test inserting a large number of words into the LinearHashMap hash table
+    public void testLinearHashMapInsertLargeNumberFive() {
+        LinearHashMap hashMap = new LinearHashMap(10_000_000);
+        for (int i = 0; i < 10_000_000; i++) {
+            assertTrue(hashMap.insert("word" + i));
+        }
+        System.out.println("Linear Hashing Number of Collisions: " + hashMap.getNumOfCollisions());
+        assertEquals(10_000_000, hashMap.getNumOfElements());
+    }
+
+
+    @Test
+    // Test inserting a large number of words into the Quadratic Hashing hash table
+    public void testQuadraticHashingInsertLargeNumberOne() {
+        QuadraticHashMap hashMap = new QuadraticHashMap(1000);
+        for (int i = 0; i < 1000; i++) {
+            assertTrue(hashMap.insert("word" + i));
+        }
+        System.out.println("Quadratic Hashing Number of Collisions: " + hashMap.getNumOfCollisions());
         assertEquals(1000, hashMap.getNumOfElements());
     }
 
     @Test
     // Test inserting a large number of words into the Quadratic Hashing hash table
-    public void testQuadraticHashingInsertLargeNumber() {
-        QuadraticHashMap hashMap = new QuadraticHashMap(1000);
-        for (int i = 0; i < 1000; i++) {
+    public void testQuadraticHashingInsertLargeNumberTwo() {
+        QuadraticHashMap hashMap = new QuadraticHashMap(10_000);
+        for (int i = 0; i < 10_000; i++) {
             assertTrue(hashMap.insert("word" + i));
         }
-        System.out.println(hashMap.getNumOfCollisions());
-        assertEquals(1000, hashMap.getNumOfElements());
+        System.out.println("Quadratic Hashing Number of Collisions: " + hashMap.getNumOfCollisions());
+        assertEquals(10_000, hashMap.getNumOfElements());
     }
+
+
     @Test
     // Test the efficiency of inserting and searching for words in the Quadratic Hashing hash table
-    public void testQuadraticHashingEfficiency() {
-        QuadraticHashMap hashMap = new QuadraticHashMap(10000);
-        long startTime = System.nanoTime();
-        for (int i = 0; i < 10000; i++) {
+    public void testQuadraticHashingEfficiencyOne() {
+        QuadraticHashMap hashMap = new QuadraticHashMap(1_000);
+        long startTime = System.currentTimeMillis();
+        for (int i = 0; i < 1_000; i++) {
             assertTrue(hashMap.insert("word" + i));
         }
-        long endTime = System.nanoTime();
+        long endTime = System.currentTimeMillis();
         long totalTime = endTime - startTime;
-        System.out.println("Quadratic Hashing Insertion Time: " + totalTime + " ns");
+        System.out.println("Quadratic Hashing Insertion Time: " + totalTime + " ms");
 
-        startTime = System.nanoTime();
-        for (int i = 0; i < 10000; i++) {
+        startTime = System.currentTimeMillis();
+        for (int i = 0; i < 1_000; i++) {
             assertTrue(hashMap.search("word" + i));
         }
-        endTime = System.nanoTime();
+        endTime = System.currentTimeMillis();
         totalTime = endTime - startTime;
-        System.out.println("Quadratic Hashing Searching Time: " + totalTime + " ns");
+        System.out.println("Quadratic Hashing Searching Time: " + totalTime + " ms");
+
+        startTime = System.currentTimeMillis();
+        for (int i = 0; i < 1_000; i++) {
+            assertTrue(hashMap.delete("word" + i));
+        }
+        endTime = System.currentTimeMillis();
+        totalTime = endTime - startTime;
+        System.out.println("Quadratic Hashing Deletion Time: " + totalTime + " ms");
+    }
+
+    @Test
+    // Test the efficiency of inserting and searching for words in the Quadratic Hashing hash table
+    public void testQuadraticHashingEfficiencyTwo() {
+        QuadraticHashMap hashMap = new QuadraticHashMap(10_000);
+        long startTime = System.currentTimeMillis();
+        for (int i = 0; i < 10_000; i++) {
+            assertTrue(hashMap.insert("word" + i));
+        }
+        long endTime = System.currentTimeMillis();
+        long totalTime = endTime - startTime;
+        System.out.println("Quadratic Hashing Insertion Time: " + totalTime + " ms");
+
+        startTime = System.currentTimeMillis();
+        for (int i = 0; i < 10_000; i++) {
+            assertTrue(hashMap.search("word" + i));
+        }
+        endTime = System.currentTimeMillis();
+        totalTime = endTime - startTime;
+        System.out.println("Quadratic Hashing Searching Time: " + totalTime + " ms");
+
+        startTime = System.currentTimeMillis();
+        for (int i = 0; i < 10_000; i++) {
+            assertTrue(hashMap.delete("word" + i));
+        }
+        endTime = System.currentTimeMillis();
+        totalTime = endTime - startTime;
+        System.out.println("Quadratic Hashing Deletion Time: " + totalTime + " ms");
     }
 
     @Test
     // Test the efficiency of inserting and searching for words in the LinearHashMap hash table
-    public void testLinearHashingEfficiency() {
-        LinearHashMap hashMap = new LinearHashMap(10000);
-        long startTime = System.nanoTime();
-        for (int i = 0; i < 10000; i++) {
+    public void testLinearHashingEfficiencyOne() {
+        LinearHashMap hashMap = new LinearHashMap(1_000);
+        long startTime = System.currentTimeMillis();
+        for (int i = 0; i < 1_000; i++) {
             assertTrue(hashMap.insert("word" + i));
         }
-        long endTime = System.nanoTime();
+        long endTime = System.currentTimeMillis();
         long totalTime = endTime - startTime;
-        System.out.println("Linear Hashing Insertion Time: " + totalTime + " ns");
+        System.out.println("Linear Hashing Insertion Time: " + totalTime + " ms");
 
-        startTime = System.nanoTime();
-        for (int i = 0; i < 10000; i++) {
+        startTime = System.currentTimeMillis();
+        for (int i = 0; i < 1_000; i++) {
             assertTrue(hashMap.search("word" + i));
         }
-        endTime = System.nanoTime();
+        endTime = System.currentTimeMillis();
         totalTime = endTime - startTime;
-        System.out.println("Linear Hashing Searching Time: " + totalTime + " ns");
+        System.out.println("Linear Hashing Searching Time: " + totalTime + " ms");
+
+        startTime = System.currentTimeMillis();
+        for (int i = 0; i < 1_000; i++) {
+            assertTrue(hashMap.delete("word" + i));
+        }
+        endTime = System.currentTimeMillis();
+        totalTime = endTime - startTime;
+        System.out.println("Linear Hashing Deletion Time: " + totalTime + " ms");
+    }
+
+    @Test
+    // Test the efficiency of inserting and searching for words in the LinearHashMap hash table
+    public void testLinearHashingEfficiencyTwo() {
+        LinearHashMap hashMap = new LinearHashMap(10_000);
+        long startTime = System.currentTimeMillis();
+        for (int i = 0; i < 10_000; i++) {
+            assertTrue(hashMap.insert("word" + i));
+        }
+        long endTime = System.currentTimeMillis();
+        long totalTime = endTime - startTime;
+        System.out.println("Linear Hashing Insertion Time: " + totalTime + " ms");
+
+        startTime = System.currentTimeMillis();
+        for (int i = 0; i < 10_000; i++) {
+            assertTrue(hashMap.search("word" + i));
+        }
+        endTime = System.currentTimeMillis();
+        totalTime = endTime - startTime;
+        System.out.println("Linear Hashing Searching Time: " + totalTime + " ms");
+
+        startTime = System.currentTimeMillis();
+        for (int i = 0; i < 10_000; i++) {
+            assertTrue(hashMap.delete("word" + i));
+        }
+        endTime = System.currentTimeMillis();
+        totalTime = endTime - startTime;
+        System.out.println("Linear Hashing Deletion Time: " + totalTime + " ms");
+    }
+
+    @Test
+    // Test the efficiency of inserting and searching for words in the LinearHashMap hash table
+    public void testLinearHashingEfficiencyThree() {
+        LinearHashMap hashMap = new LinearHashMap(100_000);
+        long startTime = System.currentTimeMillis();
+        for (int i = 0; i < 100_000; i++) {
+            assertTrue(hashMap.insert("word" + i));
+        }
+        long endTime = System.currentTimeMillis();
+        long totalTime = endTime - startTime;
+        System.out.println("Linear Hashing Insertion Time: " + totalTime + " ms");
+
+        startTime = System.currentTimeMillis();
+        for (int i = 0; i < 100_000; i++) {
+            assertTrue(hashMap.search("word" + i));
+        }
+        endTime = System.currentTimeMillis();
+        totalTime = endTime - startTime;
+        System.out.println("Linear Hashing Searching Time: " + totalTime + " ms");
+
+        startTime = System.currentTimeMillis();
+        for (int i = 0; i < 100_000; i++) {
+            assertTrue(hashMap.delete("word" + i));
+        }
+        endTime = System.currentTimeMillis();
+        totalTime = endTime - startTime;
+        System.out.println("Linear Hashing Deletion Time: " + totalTime + " ms");
+    }
+
+    @Test
+    // Test the efficiency of inserting and searching for words in the LinearHashMap hash table
+    public void testLinearHashingEfficiencyFour() {
+        LinearHashMap hashMap = new LinearHashMap(1_000_000);
+        long startTime = System.currentTimeMillis();
+        for (int i = 0; i < 1_000_000; i++) {
+            assertTrue(hashMap.insert("word" + i));
+        }
+        long endTime = System.currentTimeMillis();
+        long totalTime = endTime - startTime;
+        System.out.println("Linear Hashing Insertion Time: " + totalTime + " ms");
+
+        startTime = System.currentTimeMillis();
+        for (int i = 0; i < 1_000_000; i++) {
+            assertTrue(hashMap.search("word" + i));
+        }
+        endTime = System.currentTimeMillis();
+        totalTime = endTime - startTime;
+        System.out.println("Linear Hashing Searching Time: " + totalTime + " ms");
+
+        startTime = System.currentTimeMillis();
+        for (int i = 0; i < 1_000_000; i++) {
+            assertTrue(hashMap.delete("word" + i));
+        }
+        endTime = System.currentTimeMillis();
+        totalTime = endTime - startTime;
+        System.out.println("Linear Hashing Deletion Time: " + totalTime + " ms");
+    }
+
+    @Test
+    // Test the efficiency of inserting and searching for words in the LinearHashMap hash table
+    public void testLinearHashingEfficiencyFive() {
+        LinearHashMap hashMap = new LinearHashMap(10_000_000);
+        long startTime = System.currentTimeMillis();
+        for (int i = 0; i < 10_000_000; i++) {
+            assertTrue(hashMap.insert("word" + i));
+        }
+        long endTime = System.currentTimeMillis();
+        long totalTime = endTime - startTime;
+        System.out.println("Linear Hashing Insertion Time: " + totalTime + " ms");
+
+        startTime = System.currentTimeMillis();
+        for (int i = 0; i < 10_000_000; i++) {
+            assertTrue(hashMap.search("word" + i));
+        }
+        endTime = System.currentTimeMillis();
+        totalTime = endTime - startTime;
+        System.out.println("Linear Hashing Searching Time: " + totalTime + " ms");
+
+        startTime = System.currentTimeMillis();
+        for (int i = 0; i < 10_000_000; i++) {
+            assertTrue(hashMap.delete("word" + i));
+        }
+        endTime = System.currentTimeMillis();
+        totalTime = endTime - startTime;
+        System.out.println("Linear Hashing Deletion Time: " + totalTime + " ms");
     }
 }

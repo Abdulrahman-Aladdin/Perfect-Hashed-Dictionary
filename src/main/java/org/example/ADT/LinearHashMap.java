@@ -2,6 +2,7 @@ package org.example.ADT;
 
 
 import org.apache.commons.lang3.tuple.Pair;
+import org.apache.commons.lang3.tuple.Triple;
 
 import java.util.*;
 
@@ -11,7 +12,7 @@ public class LinearHashMap implements IHashMap {
     private final ArrayList<HashMap> outerTable;
     private int N = (int) 10e5; // default
     private final int u = Long.SIZE;
-    private final int b;
+    private int b;
 
     public LinearHashMap(int N) {
         this.N = N;
@@ -67,12 +68,13 @@ public class LinearHashMap implements IHashMap {
         return false;
     }
 
-    public Pair<Integer, Integer> batchInsert(ArrayList<String> strings) {
+    public Triple<Integer,Integer, Integer> batchInsert(ArrayList<String> strings) {
 
         int numberOfWordsInserted = 0;
         int numberOfWordsExisting = 0;
 
-        ArrayList<ArrayList<String>> tempTable = new ArrayList<>(Collections.nCopies(N, null));
+        ArrayList<ArrayList<String>> tempTable =
+                new ArrayList<>(Collections.nCopies(hashMap.size, null));
 
         Set<Integer> set = new HashSet<>();
 
@@ -86,6 +88,7 @@ public class LinearHashMap implements IHashMap {
             set.add(index);
         }
 
+        setNumOfCollisions(0);
 
         for (var i : set) {
             var list = tempTable.get(i);
@@ -104,7 +107,7 @@ public class LinearHashMap implements IHashMap {
             }
         }
 
-        return Pair.of(numberOfWordsInserted,numberOfWordsExisting);
+        return Triple.of(numberOfWordsInserted,numberOfWordsExisting,getNumOfCollisions());
     }
 
     @Override

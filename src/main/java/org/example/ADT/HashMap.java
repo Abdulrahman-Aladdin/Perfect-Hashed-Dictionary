@@ -86,7 +86,7 @@ public class HashMap {
         }
 
         if (temp == 1) {
-            rehash(b);
+            reHashHelper();
             return;
         }
 
